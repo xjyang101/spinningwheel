@@ -119,18 +119,28 @@ document.getElementById("spinBtn").addEventListener("click", () => {
 });
 
 function determineWinner() {
-  const normalizedRotation = (Math.PI * 2 - (currentRotation % (Math.PI * 2))) % (Math.PI * 2);
-  let angle = 0;
+  const TWO_PI = Math.PI * 2;
+
+  // Adjust for pointer being at the top
+  const pointerAngle = (TWO_PI - (currentRotation % TWO_PI) - Math.PI / 2 + TWO_PI) % TWO_PI;
+
+  let cumulativeAngle = 0;
 
   for (let slice of slices) {
-    const sliceAngle = (slice.weight / totalWeight) * Math.PI * 2;
-    if (normalizedRotation >= angle && normalizedRotation < angle + sliceAngle) {
+    const sliceAngle = (slice.weight / totalWeight) * TWO_PI;
+
+    if (
+      pointerAngle >= cumulativeAngle &&
+      pointerAngle < cumulativeAngle + sliceAngle
+    ) {
       resultText.textContent = `🎉 You got: ${slice.label}`;
-      break;
+      return;
     }
-    angle += sliceAngle;
+
+    cumulativeAngle += sliceAngle;
   }
 }
+
 </script>
 
 </body>
