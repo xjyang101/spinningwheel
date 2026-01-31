@@ -2,19 +2,41 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>Spinning Wheel(fixed)</title>
+<title>Spinning Wheel</title>
 <style>
   body {
     display: flex;
     flex-direction: column;
     align-items: center;
     font-family: Arial, sans-serif;
-    background: #111;
+    background: #292929;
     color: white;
   }
 
   canvas {
     margin-top: 20px;
+  }
+
+  .wheel-container {
+    position: relative;
+  }
+
+  .wheel-container img {
+    width: 75px;
+    height: 75px;
+    display: flex;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+    box-shadow: 0 20px 0px rgb(0, 0, 0);
+    cursor: pointer;
+    
+
+    
+
   }
 
   button {
@@ -28,7 +50,10 @@
 <body>
 
 <h1>Spin the Wheel</h1>
-<canvas id="wheel" width="400" height="400"></canvas>
+<div class="wheel-container">
+    <canvas id="wheel" width="400" height="400"></canvas>
+    <img id="spinBtn" src="logo.PNG" alt="">
+</div>
 <button id="spinBtn">SPIN</button>
 <p id="result"></p>
 
@@ -40,12 +65,20 @@ const resultText = document.getElementById("result");
 const center = canvas.width / 2;
 const radius = center;
 
-// 🔧 Customize slices here
+
 const slices = [
-  { label: "Small Prize", weight: 1, color: "#e74c3c" },
-  { label: "Medium Prize", weight: 2, color: "#3498db" },
-  { label: "Big Prize", weight: 3, color: "#2ecc71" },
-  { label: "Jackpot", weight: 0.5, color: "#f1c40f" }
+  { label: "No Stuff ☹️", weight: 1.37, color: "#484848"},
+  { label: "5% OFF!", weight: 1, color: "#fce02a"},
+  { label: "No Stuff ☹️", weight: 1.37, color: "#484848"},
+  { label: "$5 OFF!", weight: 1, color: "#fce02a"},
+  { label: "No Stuff ☹️", weight: 1.37, color: "#484848"},
+  { label: "Free pre-roll", weight: .55, color: "#fce02a"},
+  { label: "No Stuff ☹️", weight: 1.37, color: "#484848"},
+  { label: "5% OFF!", weight: 1, color: "#fce02a"},
+  { label: "No Stuff ☹️", weight: 1.37, color: "#484848"},
+  { label: "10% OFF!", weight: 1, color: "#fce02a"},
+  { label: "No Stuff ☹️", weight: 1.37, color: "#484848"},
+  { label: "freeeee", weight: .15, color: "#fce02a"},
 ];
 
 let totalWeight = slices.reduce((sum, s) => sum + s.weight, 0);
@@ -66,6 +99,10 @@ function drawWheel(rotation = 0) {
     ctx.arc(center, center, radius, startAngle, startAngle + sliceAngle);
     ctx.fillStyle = slice.color;
     ctx.fill();
+      // stroke (outline)
+    ctx.strokeStyle = "#000";      // or whatever color you want
+    ctx.lineWidth = 2;             // thickness of the border
+    ctx.stroke();
 
     // Text
     ctx.save();
@@ -87,6 +124,8 @@ function drawWheel(rotation = 0) {
   ctx.lineTo(center, 30);
   ctx.fillStyle = "white";
   ctx.fill();
+
+  
 }
 
 drawWheel();
@@ -145,4 +184,3 @@ function determineWinner() {
 
 </body>
 </html>
-
